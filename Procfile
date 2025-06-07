@@ -1,1 +1,1 @@
-web: NPM_CONFIG_UPDATE_NOTIFIER=false npm run build && npm start
+web: npm install -g npm@11.4.1 && npm run build && npm start
