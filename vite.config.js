@@ -42,9 +42,9 @@ export default defineConfig({
     port: 3000,
   },
   preview: {
-    allowedHosts: 'all',
-    host: true,
-    port: process.env.PORT || 4173
+    host: '0.0.0.0',
+    port: process.env.PORT || 4173,
+    strictPort: true
   },
   test: {
     globals: true,
