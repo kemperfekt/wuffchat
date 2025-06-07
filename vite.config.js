@@ -42,7 +42,7 @@ export default defineConfig({
     port: 3000,
   },
   preview: {
-    allowedHosts: ['app.wuffchat.de', 'dogbot-web.osc-fr1.scalingo.io', 'wuffchat-web.osc-fr1.scalingo.io'],
+    allowedHosts: ['app.wuffchat.de', 'dogbot-web.osc-fr1.scalingo.io', 'wuff-web.osc-fr1.scalingo.io'],
     host: true,
     port: process.env.PORT || 4173
   },
