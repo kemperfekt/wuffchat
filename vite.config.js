@@ -41,6 +41,11 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  preview: {
+    allowedHosts: ['app.wuffchat.de', 'dogbot-web.osc-fr1.scalingo.io'],
+    host: true,
+    port: process.env.PORT || 4173
+  },
   test: {
     globals: true,
     environment: 'jsdom',
