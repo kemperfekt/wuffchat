@@ -18,4 +18,6 @@ app.get('*', (req, res) => {
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`WuffChat UI running on port ${PORT}`);
+  console.log(`Express server started successfully`);
+  console.log(`Serving static files from: ${path.join(__dirname, 'dist')}`);
 });
