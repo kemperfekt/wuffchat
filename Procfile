@@ -1,1 +1,1 @@
-web: npm run build && npm start
+web: NPM_CONFIG_UPDATE_NOTIFIER=false npm run build && npm start
