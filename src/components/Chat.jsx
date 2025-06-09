@@ -24,6 +24,12 @@ function Chat() {
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
       const apiKey = import.meta.env.VITE_API_KEY;
       
+      console.log('Environment check:', { 
+        apiUrl, 
+        apiKey: apiKey ? 'present' : 'missing',
+        allEnvVars: import.meta.env
+      });
+      
       const headers = { 'Content-Type': 'application/json' };
       if (apiKey) {
         headers['X-API-Key'] = apiKey;
