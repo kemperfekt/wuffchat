@@ -1,4 +1,4 @@
-# WuffChat MVP Roadmap - Rapport-Centered Transformation
+# WuffChat Development Roadmap - Rapport to Agentic Evolution
 
 ## 1. Scientific Foundation
 
@@ -51,11 +51,11 @@ WuffChat transforms the relationship between humans and their dogs through four 
 - Build on established rapport moments
 - Create anticipation for future growth
 
-## 4. Implementation Notes (June 2025)
+## 4. Implementation Notes (v0.2.0)
 
 ### Architectural Assessment & Decisions
 
-**Current V2 Architecture Analysis:**
+**Current Foundation Architecture (v0.2.0):**
 - Clean FSM-based flow with 11 states (GREETING → SYMPTOM → DIAGNOSIS → EXERCISE)
 - Service-oriented architecture (GPTService, WeaviateService, ValidationService)
 - Event-driven state transitions with restart capability
@@ -92,10 +92,10 @@ WuffChat transforms the relationship between humans and their dogs through four 
 - ✅ **COMPLETED**: Dog name/breed collection and rapport building
 - ✅ **COMPLETED**: Smart breed context in responses
 - ✅ **COMPLETED**: MVP RapportEnhancer with presence markers
-- 🎯 **CURRENT FOCUS**: Full agentic implementation (December 2025)
+- 🎯 **NEXT**: Full agentic implementation (v0.3.0)
 - 🔮 **FUTURE**: Cross-session user profiles and memory
 
-### **Phase 0 Implementation Status (June 2025)**
+### **Phase 0 Implementation Status (v0.2.0 - Completed)**
 
 **✅ COMPLETED FEATURES:**
 
@@ -105,7 +105,7 @@ WuffChat transforms the relationship between humans and their dogs through four 
    - ✅ Energy mirroring based on user emotional state detection (high_concern, moderate_concern, calm)
    - ✅ Signature actions: `*aufmerksam-blick*`, `*nachdenklich*`, `*ruhig-atme*`
    - ✅ Balu-specific system prompt for consistent character
-   - ✅ **FIXED**: All breed references updated from Husky to Labrador (June 2025)
+   - ✅ **FIXED**: All breed references updated from Husky to Labrador
    - ✅ Contemplative response endings with personality
    - ✅ Wolf heritage backstory integration ready
 
@@ -146,26 +146,26 @@ WuffChat transforms the relationship between humans and their dogs through four 
 - **Production Readiness**: High - Comprehensive error handling, Redis fallbacks, logging
 - **Extensibility**: Excellent - Clean interfaces ready for MVP RapportEnhancer
 
-**📋 AGENTIC IMPLEMENTATION ROADMAP:**
+**📋 AGENTIC IMPLEMENTATION ROADMAP (v0.3.0):**
 
-**Phase 1: Foundation (Week 1)**
+**Phase 1: Foundation**
 - ✅ MVP RapportEnhancer completed
 - 🎯 Structured outputs for tool planning (Pydantic models)
 - 🎯 Advanced prompt engineering infrastructure (Kaggle methodology)
 - 🎯 Tool framework for existing services
 
-**Phase 2: Agentic DogAgent (Week 2-3)**
+**Phase 2: Agentic DogAgent**
 - 🎯 LLM-driven conversation planning
 - 🎯 15-20 exchange natural conversations
 - 🎯 Goal: free-flowing dialogue → diagnosis → exercise → placeholder account
 - 🎯 Tools: Weaviate lookup, rapport building, concept explanation
 
-**Phase 3: Companion Agent Integration (Week 4)**
+**Phase 3: Companion Agent Integration**
 - 🎯 Real-time rapport and emotion monitoring
 - 🎯 Dynamic prompt configuration influence
 - 🎯 System optimization insights
 
-### **🚀 Agentic Implementation Strategy (December 2025)**
+### **🚀 Agentic Implementation Strategy (v0.3.0)**
 
 **✅ COMPLETED Foundation:**
 
@@ -484,11 +484,11 @@ Phase 3 - Optimization:
 
 The communication model's rapport-building techniques combined with LLM intelligence create truly alive conversations. Every *schnüffel*, every contextual decision, every adaptive response builds authentic connection.
 
-## ⚡ CURRENT FOCUS: Agentic Implementation (December 2025)
+## ⚡ NEXT PHASE: Agentic Implementation (v0.3.0)
 
 ### Strategic Decision: Skip to Full Agentic
 - **No quasi-agentic intermediates**: Direct LLM-driven conversation management
-- **Cost-effective**: GPT-3.5-turbo for €0.01-0.02 per session
+- **Cost-effective**: GPT-4o-mini for €0.01-0.02 per session
 - **Natural conversations**: 15-20 exchanges vs current 5-7
 - **Foundation first**: Advanced prompt engineering before features
 
@@ -900,7 +900,7 @@ class RapportAnalyzer:
         }
 ```
 
-## Phase 1.5: "Full Agentic Implementation" (December 2025)
+## Phase 1.5: "Full Agentic Implementation" (v0.3.0)
 
 ### 1.5.1 Strategic Pivot to Agentic Architecture
 
@@ -1610,7 +1610,7 @@ class RapportEnhancer:
 
 This gives you immediate rapport improvement without complexity, setting up the foundation for sophisticated features when you're ready.
 
-## 🎯 FINAL IMPLEMENTATION DECISIONS (December 2025)
+## 🎯 FINAL IMPLEMENTATION DECISIONS (v0.2.0 → v0.3.0)
 
 ### The Agentic Magic Formula
 

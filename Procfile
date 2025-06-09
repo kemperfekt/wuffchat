@@ -1,1 +1,0 @@
-web: npm install -g npm@11.4.1 && npm run build && npm start
