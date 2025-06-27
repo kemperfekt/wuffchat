@@ -34,3 +34,4 @@ dist-ssr
 .CLAUDE_CONTENT/
 .vite/
 logs/
+CLAUDE.md

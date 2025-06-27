@@ -67,7 +67,7 @@ git clone https://github.com/kemperfekt/dogbot.git
 cd dogbot
 
 # Start the backend
-cd dogbot-agent
+cd dogbot-api
 pip install -r requirements.txt
 export OPENAI_API_KEY=your_key_here
 uvicorn src.main:app --port 8000
@@ -88,9 +88,9 @@ npm run dev
 
 | Repository | Purpose | Tech Stack | Status |
 |------------|---------|------------|--------|
-| **[dogbot-agent](https://github.com/kemperfekt/dogbot-agent)** | Backend API & AI Logic | FastAPI, GPT-4, Weaviate | ✅ Production |
+| **[dogbot-api](https://github.com/kemperfekt/dogbot-api)** | Backend API & AI Logic | FastAPI, GPT-4, Weaviate | ✅ Production |
 | **[dogbot-web](https://github.com/kemperfekt/dogbot-web)** | Chat Interface | Vite, React, PWA, Tailwind | ✅ Production |
-| **[dogbot-ops](https://github.com/kemperfekt/dogbot-ops)** | Data & Schema Management | Python, Content-as-Code | ✅ Active |
+| **[dogbot-data](https://github.com/kemperfekt/dogbot-data)** | Data & Schema Management | Python, Content-as-Code | ✅ Active |
 | **[dogbot-www](https://github.com/kemperfekt/dogbot-www)** | Landing Page | Static HTML, Tailwind | ✅ Live |
 
 ## 🧠 How It Works
@@ -152,7 +152,7 @@ Each repository has its own development environment:
 
 ```bash
 # Backend development
-cd dogbot-agent
+cd dogbot-api
 python -m venv venv
 source venv/bin/activate  # or `venv\Scripts\activate` on Windows
 pip install -r requirements.txt
@@ -242,7 +242,7 @@ graph LR
 
 ```bash
 # Deploy backend
-cd dogbot-agent
+cd dogbot-api
 git push scalingo main
 
 # Deploy frontend
@@ -270,7 +270,7 @@ The API is fully documented with OpenAPI/Swagger:
 
 ```bash
 # Run all tests
-cd dogbot-agent && pytest
+cd dogbot-api && pytest
 cd ../dogbot-web && npm test
 
 # Run specific test suites

@@ -7,9 +7,14 @@
 - `dogbot-data/` - Data management and Weaviate schemas
 - `dogbot-www/` - Landing page (wuffchat.de)
 
-## Current Version Strategy
-- **v0.2.0**: Current stable system (static flow with rapport enhancements)
-- **v0.3.0**: Target agentic system (in development on feature/agentic-v0.3 branches)
+## Current Branch Strategy
+- **main**: Production stable releases
+- **feature/improvedFSM-v0.25**: Enhanced FSM with better conversation flow (current stable)
+- **feature/agentic-v0.3**: True agentic BDI architecture (in development)
+
+## Version Strategy  
+- **v0.25**: Enhanced FSM - improved prompts, natural conversation, security fixes
+- **v0.3**: True agentic - BDI model, goal-driven behavior, fresh implementation
 
 ## Quick Development Commands
 
