@@ -8,7 +8,7 @@ A modern, secure PWA version of WuffChat built with Vite, React, and Tailwind CS
 
 ## 🎯 What is WuffChat?
 
-**WuffChat** is an AI-powered conversational assistant that helps dog owners understand their furry friends by **explaining behavior from the dog's perspective**. Using advanced AI and a comprehensive knowledge base about canine instincts, WuffChat provides empathetic, instinct-based behavioral analysis.
+**WuffChat** is an AI-powered conversational assistant that helps dog owners understand their furry friends by **explaining behavior from the dog's perspective**. Built on V3 agentic architecture with BDI (Beliefs-Desires-Intentions) pattern, WuffChat uses autonomous decision-making and tool integration to provide empathetic, instinct-based behavioral analysis.
 
 > **Technical Note**: This project is internally referred to as "DogBot" in repositories and code. WuffChat is the public-facing brand name.
 
@@ -30,31 +30,36 @@ graph TB
         UI[dogbot-web<br/>Vite + React PWA]
     end
     
-    subgraph "Backend"
-        API[dogbot-agent<br/>FastAPI]
-        FSM[FSM Engine<br/>11 States]
-        AI[GPT-4<br/>Analysis]
+    subgraph "Backend - V3 Agentic Architecture"
+        API[dogbot-api<br/>FastAPI]
+        AGENT[V3 Agent<br/>BDI Pattern]
+        TOOLS[Knowledge Tools<br/>Weaviate Integration]
+        AI[GPT-4<br/>Autonomous Decisions]
     end
     
     subgraph "Data Layer"
-        VDB[(Weaviate<br/>Vector DB)]
-        CACHE[(Redis<br/>Cache)]
+        VDB[(Weaviate<br/>Vector Knowledge Base)]
+        CACHE[(Redis<br/>Session Storage)]
+        MOCK[Mock Services<br/>Development Fallback]
     end
     
     subgraph "Infrastructure"
-        OPS[dogbot-ops<br/>Data Management]
+        OPS[dogbot-data<br/>Content Management]
         WWW[dogbot-www<br/>Landing Page]
     end
     
-    UI <-->|REST API| API
-    API --> FSM
-    FSM --> AI
-    API <--> VDB
+    UI <-->|V3 REST API| API
+    API --> AGENT
+    AGENT <--> TOOLS
+    TOOLS <--> VDB
+    TOOLS <--> MOCK
+    AGENT --> AI
     API <--> CACHE
     OPS -->|Manages| VDB
     
     style UI fill:#61DAFB,color:#000
     style API fill:#009688,color:#fff
+    style AGENT fill:#FF6B35,color:#fff
     style AI fill:#412991,color:#fff
     style VDB fill:#2C2C2C,color:#fff
 ```
@@ -66,11 +71,13 @@ graph TB
 git clone https://github.com/kemperfekt/dogbot.git
 cd dogbot
 
-# Start the backend
+# Start the backend (V3 architecture)
 cd dogbot-api
 pip install -r requirements.txt
-export OPENAI_API_KEY=your_key_here
-uvicorn src.main:app --port 8000
+export OPENAI_APIKEY=your_key_here
+export WEAVIATE_URL=your_weaviate_url
+export WEAVIATE_API_KEY=your_weaviate_key
+python -m uvicorn src.main:app --port 8000
 
 # In a new terminal, start the frontend
 cd ../dogbot-web
@@ -88,35 +95,41 @@ npm run dev
 
 | Repository | Purpose | Tech Stack | Status |
 |------------|---------|------------|--------|
-| **[dogbot-api](https://github.com/kemperfekt/dogbot-api)** | Backend API & AI Logic | FastAPI, GPT-4, Weaviate | ✅ Production |
-| **[dogbot-web](https://github.com/kemperfekt/dogbot-web)** | Chat Interface | Vite, React, PWA, Tailwind | ✅ Production |
+| **[dogbot-api](https://github.com/kemperfekt/dogbot-api)** | V3 Agentic Backend | FastAPI, GPT-4, BDI Architecture | ✅ Production |
+| **[dogbot-web](https://github.com/kemperfekt/dogbot-web)** | V3-Compatible Chat Interface | Vite, React, PWA, Tailwind | ✅ Production |
 | **[dogbot-data](https://github.com/kemperfekt/dogbot-data)** | Data & Schema Management | Python, Content-as-Code | ✅ Active |
 | **[dogbot-www](https://github.com/kemperfekt/dogbot-www)** | Landing Page | Static HTML, Tailwind | ✅ Live |
 
 ## 🧠 How It Works
 
-### Conversation Flow
+### V3 Agentic Conversation Flow
 
 ```mermaid
-stateDiagram-v2
-    [*] --> START
-    START --> GREETING: User starts
-    GREETING --> CONTEXT_GATHERING: Collects info
-    CONTEXT_GATHERING --> INITIAL_ASSESSMENT: Analyzes behavior
-    INITIAL_ASSESSMENT --> INSTINCT_DIAGNOSIS: Identifies instincts
-    INSTINCT_DIAGNOSIS --> DETAILED_SOLUTION: Provides tips
-    DETAILED_SOLUTION --> FEEDBACK: Asks for feedback
-    FEEDBACK --> END: Completes
+flowchart TD
+    A[User Input] --> B[Belief Extraction]
+    B --> C[Agent Decision Making]
+    C --> D{Needs Knowledge?}
+    D -->|Yes| E[Use Weaviate Tools]
+    D -->|No| F[Direct Response]
+    E --> G[Integrate Knowledge]
+    G --> H[Generate Response]
+    F --> H
+    H --> I[Update Beliefs]
+    I --> J[User Response]
+    J --> A
     
-    note right of INITIAL_ASSESSMENT
-        AI provides response from
-        the dog's perspective
-    end note
+    subgraph "Tools Available"
+        K[get_perspective]
+        L[analyze_instinct]
+        M[recommend_exercise]
+    end
     
-    note right of INSTINCT_DIAGNOSIS
-        Maps behavior to core
-        canine instincts
-    end note
+    E -.-> K
+    E -.-> L
+    E -.-> M
+    
+    style C fill:#FF6B35,color:#fff
+    style E fill:#2C2C2C,color:#fff
 ```
 
 ### Core Instincts Model
@@ -151,12 +164,18 @@ mindmap
 Each repository has its own development environment:
 
 ```bash
-# Backend development
+# Backend development (V3 architecture)
 cd dogbot-api
-python -m venv venv
-source venv/bin/activate  # or `venv\Scripts\activate` on Windows
+python -m venv .venv
+source .venv/bin/activate  # or `.venv\Scripts\activate` on Windows
 pip install -r requirements.txt
+pip install -r requirements-dev.txt
 pytest  # Run tests
+
+# Run V3 architecture
+python -m uvicorn src.v3.main:app --port 8000  # V3 only
+# OR
+python -m uvicorn src.main:app --port 8000      # V2/V3 unified
 
 # Frontend development
 cd dogbot-web
@@ -262,8 +281,10 @@ The API is fully documented with OpenAPI/Swagger:
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/health` | GET | Health check |
-| `/start-conversation` | POST | Begin new chat |
-| `/send-message` | POST | Send message |
+| `/v3/start` | POST | Start V3 agentic conversation |
+| `/v3/message` | POST | Send message to V3 agent |
+| `/v3/session/{session_id}` | GET | Get session state |
+| `/v2/message` | POST | V2 compatibility endpoint |
 | `/feedback` | POST | Submit feedback |
 
 ## 🧪 Testing
@@ -274,7 +295,8 @@ cd dogbot-api && pytest
 cd ../dogbot-web && npm test
 
 # Run specific test suites
-pytest tests/test_flow_engine.py
+pytest tests/v3/agents/test_dog_agent.py
+pytest tests/v3/tools/test_weaviate_tool.py
 npm test -- --coverage
 ```
 
