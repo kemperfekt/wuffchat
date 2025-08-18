@@ -1,336 +1,149 @@
-# WuffChat - Frontend Application
+# WuffChat - AI-Powered Dog Behavior Assistant
 
-A modern, secure PWA version of WuffChat built with Vite, React, and Tailwind CSS.
+> **Understand your dog's behavior from their perspective with autonomous AI agents and advanced vector knowledge retrieval**
 
-> **Note**: This is the migrated frontend that replaced the old Create React App version.
+An innovative conversational AI system that bridges the communication gap between dogs and their humans through empathetic behavioral analysis, powered by autonomous agent architecture and semantic knowledge graphs.
 
----
+## 🎯 What Makes WuffChat Special
 
-## 🎯 What is WuffChat?
+**WuffChat** revolutionizes pet consultation by combining cutting-edge AI technologies:
 
-**WuffChat** is an AI-powered conversational assistant that helps dog owners understand their furry friends by **explaining behavior from the dog's perspective**. Built on V3 agentic architecture with BDI (Beliefs-Desires-Intentions) pattern, WuffChat uses autonomous decision-making and tool integration to provide empathetic, instinct-based behavioral analysis.
-
-> **Technical Note**: This project is internally referred to as "DogBot" in repositories and code. WuffChat is the public-facing brand name.
+- **🧠 Autonomous Agents**: True agentic BDI (Beliefs-Desires-Intentions) architecture - no rigid conversation flows
+- **🔍 Vector Knowledge Base**: Semantic search through expert-curated behavioral data using Weaviate
+- **🐕 Dog's Perspective**: Unique instinct-based analysis explaining behavior from the dog's viewpoint
+- **⚡ Infrastructure as Code**: Automated schema management and knowledge deployment
 
 ```mermaid
 graph LR
-    A[🧑 Dog Owner] -->|Describes Behavior| B[💬 WuffChat]
-    B -->|Analyzes| C[🧠 AI Engine]
-    C -->|Searches| D[📚 Knowledge Base]
-    D -->|Returns| E[🐕 Dog's Perspective]
-    E -->|Provides| F[💡 Training Tips]
-    F -->|Helps| A
+    A[🧑 Dog Owner] -->|Describes Behavior| B[💬 WuffChat Agent]
+    B -->|Autonomously Decides| C[🧠 Vector Search]
+    C -->|Retrieves| D[📚 Expert Knowledge]
+    D -->|Provides| E[🐕 Dog's Perspective]
+    E -->|Delivers| F[💡 Actionable Insights]
 ```
 
-## 🏗️ Architecture Overview
+## 🚀 Key Innovations
 
-```mermaid
-graph TB
-    subgraph "Frontend"
-        UI[dogbot-web<br/>Vite + React PWA]
-    end
-    
-    subgraph "Backend - V3 Agentic Architecture"
-        API[dogbot-api<br/>FastAPI]
-        AGENT[V3 Agent<br/>BDI Pattern]
-        TOOLS[Knowledge Tools<br/>Weaviate Integration]
-        AI[GPT-4<br/>Autonomous Decisions]
-    end
-    
-    subgraph "Data Layer"
-        VDB[(Weaviate<br/>Vector Knowledge Base)]
-        CACHE[(Redis<br/>Session Storage)]
-        MOCK[Mock Services<br/>Development Fallback]
-    end
-    
-    subgraph "Infrastructure"
-        OPS[dogbot-data<br/>Content Management]
-        WWW[dogbot-www<br/>Landing Page]
-    end
-    
-    UI <-->|V3 REST API| API
-    API --> AGENT
-    AGENT <--> TOOLS
-    TOOLS <--> VDB
-    TOOLS <--> MOCK
-    AGENT --> AI
-    API <--> CACHE
-    OPS -->|Manages| VDB
-    
-    style UI fill:#61DAFB,color:#000
-    style API fill:#009688,color:#fff
-    style AGENT fill:#FF6B35,color:#fff
-    style AI fill:#412991,color:#fff
-    style VDB fill:#2C2C2C,color:#fff
-```
+### Autonomous Agent Architecture
+- **No Scripted Flows**: Agent makes independent decisions about conversation direction
+- **Dynamic Tool Usage**: Intelligent selection of knowledge retrieval tools based on context
+- **Belief Management**: Persistent understanding of dog, owner, and situation evolves throughout conversation
 
-## 🚀 Quick Start
+### Semantic Knowledge Engine
+- **Vector Database**: Weaviate-powered similarity search across behavioral patterns
+- **Content as Code**: Automated pipeline from Excel expertise to searchable knowledge graphs
+- **Instinct Modeling**: Four-pillar canine psychology framework (Hunting, Territorial, Pack, Sexual instincts)
+
+### Production-Ready Infrastructure
+- **Database as Code**: Automated schema deployment and content management
+- **Security First**: Comprehensive rate limiting, session management, and input validation
+- **Progressive Web App**: Installable mobile experience with offline capabilities
+
+## 📦 Architecture Overview
+
+This project consists of four specialized repositories working in harmony:
+
+### 🔧 **[Backend API](https://github.com/kemperfekt/dogbot-api)**
+*Autonomous agent backend with FastAPI and GPT-4 integration*
+
+- **V3 Agentic Architecture**: BDI pattern with autonomous decision-making
+- **Tool Integration**: WeaviateKnowledgeTool for behavioral insights
+- **Security Features**: Rate limiting, session management, comprehensive input validation
+- **Production Deployment**: Auto-scaling on Scalingo with health monitoring
+
+### 🎨 **[Frontend App](https://github.com/kemperfekt/dogbot-web)**
+*Modern React PWA with real-time chat interface*
+
+- **Vite + React**: Lightning-fast development and optimal production builds
+- **Progressive Web App**: Installable mobile experience with offline support
+- **Real-time Communication**: Seamless agent conversation with typing indicators
+- **Performance Optimized**: 95+ Lighthouse score, ~63KB gzipped bundle
+
+### 📊 **[Data Management](https://github.com/kemperfekt/dogbot-data)**
+*Knowledge base infrastructure and content pipeline*
+
+- **Vector Database Operations**: Automated Weaviate schema and content deployment
+- **Content as Code**: Excel → JSON → Vector Database pipeline
+- **Expert Knowledge**: Curated behavioral data with breed-specific instinct mappings
+- **Database as Code**: Reproducible knowledge base setup and updates
+
+### 🌐 **[Landing Page](https://github.com/kemperfekt/dogbot-www)**
+*Public-facing website and marketing presence*
+
+## 🛠️ Quick Development Setup
 
 ```bash
 # Clone the meta repository
 git clone https://github.com/kemperfekt/dogbot.git
 cd dogbot
 
-# Start the backend (V3 architecture)
+# Backend setup (V3 agentic architecture)
 cd dogbot-api
+python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-export OPENAI_APIKEY=your_key_here
-export WEAVIATE_URL=your_weaviate_url
-export WEAVIATE_API_KEY=your_weaviate_key
+export OPENAI_APIKEY=your_key WEAVIATE_URL=your_url WEAVIATE_API_KEY=your_key
 python -m uvicorn src.main:app --port 8000
 
-# In a new terminal, start the frontend
+# Frontend setup (in new terminal)
 cd ../dogbot-web
-npm install
+npm install && cp .env.development.template .env.development
 npm run dev
 
-# Set up environment
-cp .env.development.template .env.development
-# Edit .env.development and add your API key
+# Access the application
+# Frontend: http://localhost:3000
+# API Docs: http://localhost:8000/docs
+```
 
-# Start development server
-npm run dev
+## 🧠 Technical Highlights
 
-## 📦 Repository Structure
+### Autonomous Decision Making
+Unlike traditional chatbots with predetermined flows, WuffChat's agent autonomously:
+- Decides what questions to ask based on current beliefs
+- Chooses appropriate knowledge retrieval tools
+- Adapts conversation style to owner's communication preferences
+- Determines when sufficient information has been gathered
 
-| Repository | Purpose | Tech Stack | Status |
-|------------|---------|------------|--------|
-| **[dogbot-api](https://github.com/kemperfekt/dogbot-api)** | V3 Agentic Backend | FastAPI, GPT-4, BDI Architecture | ✅ Production |
-| **[dogbot-web](https://github.com/kemperfekt/dogbot-web)** | V3-Compatible Chat Interface | Vite, React, PWA, Tailwind | ✅ Production |
-| **[dogbot-data](https://github.com/kemperfekt/dogbot-data)** | Data & Schema Management | Python, Content-as-Code | ✅ Active |
-| **[dogbot-www](https://github.com/kemperfekt/dogbot-www)** | Landing Page | Static HTML, Tailwind | ✅ Live |
-
-## 🧠 How It Works
-
-### V3 Agentic Conversation Flow
-
+### Vector-Powered Knowledge Retrieval
 ```mermaid
-flowchart TD
-    A[User Input] --> B[Belief Extraction]
-    B --> C[Agent Decision Making]
-    C --> D{Needs Knowledge?}
-    D -->|Yes| E[Use Weaviate Tools]
-    D -->|No| F[Direct Response]
-    E --> G[Integrate Knowledge]
-    G --> H[Generate Response]
-    F --> H
-    H --> I[Update Beliefs]
-    I --> J[User Response]
-    J --> A
+flowchart LR
+    A[User Query] --> B[Agent Decision]
+    B --> C{Needs Knowledge?}
+    C -->|Yes| D[Vector Search]
+    D --> E[Semantic Matching]
+    E --> F[Expert Knowledge]
+    F --> G[Contextual Response]
+    C -->|No| H[Direct Response]
     
-    subgraph "Tools Available"
-        K[get_perspective]
-        L[analyze_instinct]
-        M[recommend_exercise]
-    end
-    
-    E -.-> K
-    E -.-> L
-    E -.-> M
-    
-    style C fill:#FF6B35,color:#fff
-    style E fill:#2C2C2C,color:#fff
+    style D fill:#2C2C2C,color:#fff
+    style E fill:#FF6B35,color:#fff
 ```
 
-### Core Instincts Model
+### Infrastructure as Code
+- **Automated Schema Management**: Database structure versioned and deployable
+- **Content Pipeline**: Expert knowledge flows from Excel to production vector database
+- **Environment Parity**: Development mock services mirror production behavior
 
-WuffChat analyzes behavior through four fundamental canine instincts:
+## 🌟 What Makes This Special
 
-```mermaid
-mindmap
-  root((Dog Behavior))
-    Jagdinstinkt
-      Prey Drive
-      Chase Behavior
-      Resource Guarding
-    Territorialinstinkt
-      Space Protection
-      Boundary Setting
-      Alert Behavior
-    Rudelinstinkt
-      Pack Dynamics
-      Social Hierarchy
-      Cooperation
-    Sexualinstinkt
-      Mating Behavior
-      Competition
-      Hormonal Changes
-```
+1. **True Agency**: No state machines or rigid flows - the AI agent decides conversation direction
+2. **Semantic Understanding**: Vector similarity search finds relevant knowledge even for novel situations  
+3. **Expert Knowledge at Scale**: Behavioral expertise encoded in searchable, relationship-rich data structures
+4. **Production-Grade Security**: Enterprise-level authentication, rate limiting, and input validation
+5. **Infrastructure Automation**: Database schema and content deployment fully automated
 
-## 🔧 Development
+## 🔗 Repository Links
 
-### Local Development Setup
+| Component | Repository | Purpose |
+|-----------|------------|---------|
+| **Backend** | [dogbot-api](https://github.com/kemperfekt/dogbot-api) | Agentic FastAPI backend with GPT-4 integration |
+| **Frontend** | [dogbot-web](https://github.com/kemperfekt/dogbot-web) | React PWA with real-time chat interface |
+| **Data** | [dogbot-data](https://github.com/kemperfekt/dogbot-data) | Vector database management and content pipeline |
+| **Landing** | [dogbot-www](https://github.com/kemperfekt/dogbot-www) | Public website and marketing presence |
 
-Each repository has its own development environment:
+## 🚀 Live Application
 
-```bash
-# Backend development (V3 architecture)
-cd dogbot-api
-python -m venv .venv
-source .venv/bin/activate  # or `.venv\Scripts\activate` on Windows
-pip install -r requirements.txt
-pip install -r requirements-dev.txt
-pytest  # Run tests
-
-# Run V3 architecture
-python -m uvicorn src.v3.main:app --port 8000  # V3 only
-# OR
-python -m uvicorn src.main:app --port 8000      # V2/V3 unified
-
-# Frontend development
-cd dogbot-web
-npm install
-npm test
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
-```
-
-## 🔧 Features
-
-- ⚡ **Vite** - Lightning fast development
-- 📱 **PWA** - Installable as mobile app
-- 🎨 **Tailwind CSS** - Utility-first styling
-- 🔒 **Secure** - 0 vulnerabilities
-- 🧪 **Vitest** - Modern testing framework
-- 📦 **TypeScript Ready** - Can be gradually added
-
-## 📱 PWA Features
-
-- **Installable**: Users can install as native app
-- **Offline Support**: Basic offline functionality
-- **Auto-Update**: Automatic updates without app store
-- **Native Feel**: Full-screen, native-like experience
-
-## 🛡️ Security
-
-- Environment variables properly configured
-- No hardcoded secrets
-- Modern dependency management
-- HTTPS ready
-
-## 🚀 Deployment
-
-### Static Hosting (Recommended)
-```bash
-npm run build
-# Upload dist/ folder to any static host
-```
-
-### Environment Variables
-```env
-VITE_API_URL=https://your-api-domain.com
-VITE_API_KEY=your_production_api_key
-```
-
-**dogbot-web/.env.development**
-```env
-VITE_API_URL=http://localhost:8000
-VITE_API_KEY=your_api_key_here
-```
-
-## 📊 Performance
-
-- **Bundle Size**: ~63KB gzipped
-- **Build Time**: <2 seconds
-- **Dev Server**: <50ms hot reload
-- **Lighthouse Score**: 95+ (PWA optimized)
-
-## 🔄 Migration from Create React App
-
-This version replaces the old Create React App with:
-- ✅ 0 vulnerabilities (vs 9 vulnerabilities)
-- ✅ 10x faster development
-- ✅ 50% smaller bundle size
-- ✅ PWA capabilities
-- ✅ Modern tooling
-
-```mermaid
-graph LR
-    A[GitHub Push] -->|Webhook| B[Scalingo Build]
-    B -->|Deploy| C[Production]
-    C --> D[app.wuffchat.de]
-    C --> E[api.wuffchat.de]
-    C --> F[wuffchat.de]
-```
-
-### Manual Deployment
-
-```bash
-# Deploy backend
-cd dogbot-api
-git push scalingo main
-
-# Deploy frontend
-cd dogbot-web
-git push scalingo main
-```
-
-## 📊 API Documentation
-
-The API is fully documented with OpenAPI/Swagger:
-
-- **Local**: http://localhost:8000/docs
-- **Production**: https://api.wuffchat.de/docs
-
-### Key Endpoints
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/health` | GET | Health check |
-| `/v3/start` | POST | Start V3 agentic conversation |
-| `/v3/message` | POST | Send message to V3 agent |
-| `/v3/session/{session_id}` | GET | Get session state |
-| `/v2/message` | POST | V2 compatibility endpoint |
-| `/feedback` | POST | Submit feedback |
-
-## 🧪 Testing
-
-```bash
-# Run all tests
-cd dogbot-api && pytest
-cd ../dogbot-web && npm test
-
-# Run specific test suites
-pytest tests/v3/agents/test_dog_agent.py
-pytest tests/v3/tools/test_weaviate_tool.py
-npm test -- --coverage
-```
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md) for details.
-
-### Development Workflow
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 🛡️ Security & Privacy
-
-- All conversations are anonymous
-- No personal data is stored without consent
-- OpenAI API calls use anonymized prompts
-- See our [Privacy Policy](https://wuffchat.de/datenschutz.html)
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
-
-
-## 📝 Naming Convention
-
-- **WuffChat**: Public-facing product name (used in marketing, UI, and customer communication)
-- **DogBot**: Internal technical name (used in code, repositories, and technical documentation)
-
-This dual naming allows us to maintain technical consistency while presenting a friendly brand to users.
+**Experience WuffChat**: [wuffchat.de](https://wuffchat.de)
 
 ---
 
-Built with ❤️ using Vite + React
+*Built with autonomous agents, vector databases, and a deep understanding of canine psychology*
